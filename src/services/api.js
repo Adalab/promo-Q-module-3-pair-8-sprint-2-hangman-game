@@ -1,4 +1,4 @@
-function callToApi() {
+function getWordFromApi() {
   return fetch("https://adalab-api.herokuapp.com/api/random/word/")
     .then((response) => response.json())
     .then((data) => {
@@ -7,4 +7,4 @@ function callToApi() {
     });
 }
 
-export default callToApi;
+export default getWordFromApi;
