@@ -3,6 +3,7 @@ import Header from './Header';
 import Dummy from './Dummy';
 import SolutionLetters from './SolutionLetters';
 import ErrorsLetters from './ErrorsLetters';
+import Form from './Form';
 
 // api
 import getWordFromApi from '../services/api';
@@ -32,10 +33,6 @@ function App() {
     if (re.test(ev.target.value)) {
       handleLastLetter(ev.target.value);
     }
-  };
-
-  const handleSubmit = (ev) => {
-    ev.preventDefault();
   };
 
   const getNumberOfErrors = () => {
@@ -88,23 +85,7 @@ function App() {
         <section>
           <SolutionLetters renderSolutionLetters={renderSolutionLetters()} />
           <ErrorsLetters renderErrorLetters={renderErrorLetters()} />
-          <form className="form" onSubmit={handleSubmit}>
-            <label className="title" htmlFor="last-letter">
-              Escribe una letra:
-            </label>
-            <input
-              autoFocus
-              autoComplete="off"
-              className="form__input"
-              maxLength="1"
-              type="text"
-              name="last-letter"
-              id="last-letter"
-              value={lastLetter}
-              onKeyDown={handleKeyDown}
-              onChange={handleChange}
-            />
-          </form>
+          <Form lastLetter={lastLetter} />
         </section>
         <Dummy numberOfErrors={getNumberOfErrors()} />
       </main>
