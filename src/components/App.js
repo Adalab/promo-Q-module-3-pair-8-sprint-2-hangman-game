@@ -85,7 +85,7 @@ function App() {
         <section>
           <SolutionLetters renderSolutionLetters={renderSolutionLetters()} />
           <ErrorsLetters renderErrorLetters={renderErrorLetters()} />
-          <Form lastLetter={lastLetter} />
+          <Form lastLetter={lastLetter} handleKeyDown={handleKeyDown} handleChange={handleChange}/>
         </section>
         <Dummy numberOfErrors={getNumberOfErrors()} />
       </main>

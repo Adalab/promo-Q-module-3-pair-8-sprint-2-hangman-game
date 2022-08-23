@@ -16,8 +16,8 @@ function Form(props) {
         name="last-letter"
         id="last-letter"
         value={props.lastLetter}
-        onKeyDown={handleKeyDown}
-        onChange={handleChange}
+        onKeyDown={props.handleKeyDown}
+        onChange={props.handleChange}
       />
     </form>
   );
