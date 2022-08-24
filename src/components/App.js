@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Header from './Header';
 import Dummy from './Dummy';
 import SolutionLetters from './SolutionLetters';
 import ErrorsLetters from './ErrorsLetters';
 import Form from './Form';
+import Footer from './Footer';
+// import Instructions from './Instructions';
+// import Options from './Options';
 
 // api
 import getWordFromApi from '../services/api';
@@ -80,15 +84,25 @@ function App() {
 
   return (
     <div className="page">
-      <Header />
-      <main className="main">
-        <section>
+       <Routes>
+        <Route path="/" element={<section>
           <SolutionLetters renderSolutionLetters={renderSolutionLetters()} />
           <ErrorsLetters renderErrorLetters={renderErrorLetters()} />
           <Form lastLetter={lastLetter} handleKeyDown={handleKeyDown} handleChange={handleChange}/>
-        </section>
+        </section>} />
+        {/* <Route path="/instructions" />
+        <Route path="/options" /> */}
+      </Routes>
+      <Header />
+      <main className="main">
+        {/* <section>
+          <SolutionLetters renderSolutionLetters={renderSolutionLetters()} />
+          <ErrorsLetters renderErrorLetters={renderErrorLetters()} />
+          <Form lastLetter={lastLetter} handleKeyDown={handleKeyDown} handleChange={handleChange}/>
+        </section> */}
         <Dummy numberOfErrors={getNumberOfErrors()} />
       </main>
+      <Footer />
     </div>
   );
 }
