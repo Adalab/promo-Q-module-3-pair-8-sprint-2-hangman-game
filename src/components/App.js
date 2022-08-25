@@ -6,26 +6,35 @@ import SolutionLetters from './SolutionLetters';
 import ErrorsLetters from './ErrorsLetters';
 import Form from './Form';
 import Footer from './Footer';
-// import Instructions from './Instructions';
-// import Options from './Options';
+import Instructions from './Instructions';
+import Options from './Options';
 
 // api
 import getWordFromApi from '../services/api';
 // styles
 import '../styles/App.scss';
+import Loading from './Loading';
 
 function App() {
   const [word, setWord] = useState('');
   const [userLetters, setUserLetters] = useState([]);
   const [lastLetter, setLastLetter] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     getWordFromApi().then((word) => {
       setWord(word);
+      setLoading(false);
     });
   }, []);
 
   // events
+  const handleInput = (valueInput) => {
+    setLastLetter('');
+    setUserLetters([]);
+    setWord(valueInput);
+  };
 
   const handleKeyDown = (ev) => {
     // Sabrías decir para qué es esta línea
@@ -84,24 +93,37 @@ function App() {
 
   return (
     <div className="page">
-       <Routes>
-        <Route path="/" element={<section>
-          <SolutionLetters renderSolutionLetters={renderSolutionLetters()} />
-          <ErrorsLetters renderErrorLetters={renderErrorLetters()} />
-          <Form lastLetter={lastLetter} handleKeyDown={handleKeyDown} handleChange={handleChange}/>
-        </section>} />
-        {/* <Route path="/instructions" />
-        <Route path="/options" /> */}
-      </Routes>
+      <Loading loading={loading} />
+
       <Header />
       <main className="main">
-        {/* <section>
-          <SolutionLetters renderSolutionLetters={renderSolutionLetters()} />
-          <ErrorsLetters renderErrorLetters={renderErrorLetters()} />
-          <Form lastLetter={lastLetter} handleKeyDown={handleKeyDown} handleChange={handleChange}/>
-        </section> */}
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <section>
+                <SolutionLetters
+                  renderSolutionLetters={renderSolutionLetters()}
+                />
+                <ErrorsLetters renderErrorLetters={renderErrorLetters()} />
+                <Form
+                  lastLetter={lastLetter}
+                  handleKeyDown={handleKeyDown}
+                  handleChange={handleChange}
+                />
+              </section>
+            }
+          />
+          <Route path="/instructions" element={<Instructions />} />
+          <Route
+            path="/options"
+            element={<Options word={word} handleInput={handleInput} />}
+          />
+        </Routes>
+
         <Dummy numberOfErrors={getNumberOfErrors()} />
       </main>
+
       <Footer />
     </div>
   );
