@@ -13,20 +13,29 @@ import Options from './Options';
 import getWordFromApi from '../services/api';
 // styles
 import '../styles/App.scss';
+import Loading from './Loading';
 
 
 function App() {
   const [word, setWord] = useState('');
   const [userLetters, setUserLetters] = useState([]);
   const [lastLetter, setLastLetter] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     getWordFromApi().then((word) => {
       setWord(word);
+      setLoading(false);
     });
   }, []);
 
   // events
+  const handleInput = (valueInput) => {
+    setLastLetter('');
+    setUserLetters([]);
+    setWord(valueInput);
+  };
 
   const handleKeyDown = (ev) => {
     // Sabrías decir para qué es esta línea
@@ -96,8 +105,10 @@ function App() {
         <Route path="/instructions" element={<Instructions />} />
         <Route path="/options" element={<Options />}/> 
       </Routes>
+      <Loading loading={loading} />
         <Dummy numberOfErrors={getNumberOfErrors()} />
       </main>
+
       <Footer />
     </div>
   );
